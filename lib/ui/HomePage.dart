@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<Map> _getGifs() async {
     http.Response response;
-    if(_search == null)
+    if(_search == null || _search .isEmpty)
       response = await http.get("https://api.giphy.com/v1/gifs/trending?api_key=f2hHggLWSZqWGvwIpmztoaCh0juXg3hr&limit=19&rating=G");
     else
       response = await http.get("https://api.giphy.com/v1/gifs/search?api_key=f2hHggLWSZqWGvwIpmztoaCh0juXg3hr&q=${_search}&limit=19&offset=${_offset}&rating=G&lang=en");
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   int _getCount(List data){
-    if(_search == null)
+    if(_search == null || _search .isEmpty)
       return data.length;
     else
       return data.length + 1;
@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
       ),
       itemCount: _getCount(s.data['data']),
       itemBuilder: (context, index){
-        if(_search == null || index < s.data['data'].length)
+        if(_search == null || _search .isEmpty || index < s.data['data'].length)
           return GestureDetector(
             child: FadeInImage.memoryNetwork(
               image: s.data['data'][index]['images']['fixed_height']['url'],
